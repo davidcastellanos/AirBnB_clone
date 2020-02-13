@@ -3,29 +3,33 @@
 Base module
 """
 import uuid
-from datetime import datetime, date, time
+from datetime import datetime
 
 
 class BaseModel:
-    id = str(uuid.uuid4())
-    created_at = datetime.now(tz=None).isoformat(sep='T')
-    updated_at = datetime.now(tz=None).isoformat(sep='T')
+
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
 
     def __str__(self):
         """
         Print [<class name>] (<self.id>) <self.__dict__>
         """
-        return "[BaseModel] " + "(" + str(self.id) + ") "\
+        return "[" + self.__class__.__name__ + "]"\
+            + "(" + str(self.id) + ") "\
             + str(self.__dict__)
 
     def save(self):
         """
         Update date-time update_at public attribute
         """
-        self.updated_at = datetime.now(tz=None).isoformat(sep='T')
+        self.updated_at = datetime.now().isoformat()
 
     def to_dict(self):
         """
         Returns a dictionary containing all keys/values __dict__ of instance
         """
+        self.__dict__['__class__'] = self.__class__.__name__
         return self.__dict__
