@@ -13,14 +13,14 @@ class BaseModel:
         Constructor
         """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now().isoformat()
-        self.updated_at = datetime.now().isoformat()
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
         if kwargs is not None:
             for key, value in kwargs.items():
                 if key == 'created_at':
-                    value = datetime.now().isoformat()
+                    value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
                 if key == 'updated_at':
-                    value = datetime.now().isoformat()
+                    value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
 
     def __str__(self):
         """
