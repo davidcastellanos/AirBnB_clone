@@ -2,6 +2,7 @@
 """
 Base module
 """
+import models
 import uuid
 from datetime import datetime
 
@@ -15,12 +16,17 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        models.storage.new(self)
         if kwargs is not None:
             for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
                 if key == 'created_at':
                     value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
                 if key == 'updated_at':
                     value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
+                
+            
 
     def __str__(self):
         """
@@ -31,14 +37,19 @@ class BaseModel:
             + str(self.__dict__)
 
     def save(self):
+        print('save base')
         """
         Update date-time update_at public attribute
         """
-        self.updated_at = datetime.now().isoformat()
+        self.updated_at = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
+        models.storage.save()
 
     def to_dict(self):
         """
         Returns a dictionary containing all keys/values __dict__ of instance
         """
-        self.__dict__['__class__'] = self.__class__.__name__
-        return self.__dict__
+        pdp = self.__dict__.copy()
+        pdp['__class__'] = self.__class__.__name__
+        pdp['created_at'] = self.created_at.isoformat()
+        pdp['updated_at'] = self.updated_at.isoformat()       
+        return pdp
