@@ -5,7 +5,7 @@ Console prompt hbnb
 import cmd
 from models import storage
 from models.base_model import BaseModel
-classes={'BaseModel': BaseModel,}
+classes = ["BaseModel"]
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -105,19 +105,46 @@ class HBNBCommand(cmd.Cmd):
         Display contents
         """
         split = args.split()
+        content = []
         if len(args) is 0:
-             for key, value in storage.all().items():
+            for key, value in storage.all().items():
                 key = key.split('.')
-                print(value)
+                content.append(str(value))
+            print(content)
         elif split[0] in classes:
             for key, value in storage.all().items():
                 key = key.split('.')
                 if split[0] == key[0]:
-                    print(value)
+                    content.append(str(value))
+            print(content)
         else:
             print("** class doesn't exist **")
             return None
 
+    def do_update(self, args):
+        """
+        Updates an instance based on the class name and id
+        by adding or updating attribute
+        """
+        splits = args.split()
+
+        if not splits:
+            print("** class name missing **")
+        else:
+            if splits[0] not in classes:
+                print("** class doesn't exist **")
+            elif len(splits) == 1:
+                print("** instance id missing **")
+            else:
+                key = "{}.{}".format(splits[0], splits[1])
+                if key not in storage.all().keys():
+                    print("** no instance found **")
+                elif len(splits) == 2:
+                    print("** attribute name missing **")
+                elif len(splits) == 3:
+                    print("** value missing **")
+                else:
+                    setattr(storage.all()[key], splits[2], splits[3])
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
