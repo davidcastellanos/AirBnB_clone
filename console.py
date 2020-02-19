@@ -5,6 +5,7 @@ Console prompt hbnb
 import cmd
 from models import storage
 from models.base_model import BaseModel
+classes={'BaseModel': BaseModel,}
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -46,70 +47,77 @@ class HBNBCommand(cmd.Cmd):
         except:
             print("** class doesn't exist **")
 
-    # def do_show(self, args):
+    def do_show(self, args):
+        """
+        Prints the string representation of an instance
+        based on the class name and id
+        """
+        splits = args.split()
+        if len(splits) is not 0:
+            if len(splits) is 1 and splits[0] in classes:
+                print("** instance id missing **")
+                return None
+            else:
+                if splits[0] not in classes:
+                    print("** class doesn't exist **")
+                    return None
+                else:
+                    keys = splits[0] + "." + splits[1]
+                    if keys in storage.all().keys():
+                        print(storage.all()[keys])
+                        return None
+                    else:
+                        print("** no instance found **")
+                        return None
+        else:
+            print("** class name missing **")
+            return None
+
+
+    def do_destroy(self, args):
+        """
+        Deletes an instance based on the class name and id
+        """
+        splits = args.split()
+        if len(splits) is not 0:
+            if len(splits) is 1 and splits[0] in classes:
+                print("** instance id missing **")
+                return None
+            else:
+                if splits[0] not in classes:
+                    print("** class doesn't exist **")
+                    return None
+                else:
+                    keys = splits[0] + "." + splits[1]
+                    if keys in storage.all().keys():
+                        del storage.all()[keys]
+                        storage.save()
+                    else:
+                        print("** no instance found **")
+                        return None
+        else:
+            print("** class name missing **")
+            return None
+
+
+    # def do_all(self, args):
     #     """
-    #     Prints the string representation of an instance
-    #     based on the class name and id
+    #     Display contents
     #     """
     #     split = args.split()
-    #     if len(args) is 0:
-    #         print("** class name missing **")
-    #         return None
-    #     elif len(args) is 1:
-    #         print("** instance id missing **")
-    #         return None
-    #     args = args.split()
-    #     keys = args[0] + "." + args[1].replace("\"", "")
-    #     if keys in storage.all():
-    #         print(storage.all()[keys])
-    #     else:
-    #         print("** no instance found **")
-
-
-    # def do_destroy(self, args):
-    #     """
-    #     Deletes an instance based on the class name and id
-    #     """
-    #     args = args.split()
-
-    #     if len(args) is 0:
-    #         print("** class name missing **")
-    #         return None
-    #     elif len(args) is not 0:
+    #     if split :
     #         try:
-    #             eval(args[0])
+    #             eval(split[0])
     #         except:
     #             print("** class doesn't exist **")
     #             return None
-    #     elif len(args) < 2:
-    #         print("** instance id missing **")
-    #         return None
-    #     else:
-    #         keys = args[0] + "." + args[1].replace("\"", "")
-    #         if keys in storage.all():
-    #             del storage.all()[keys]
-    #             storage.save()
+    #     for key, value in storage.all().items():
+    #         if not split:
+    #             print(value)
     #         else:
-    #             print("** no instance found **")
-
-    def do_all(self, args):
-        """
-        Display contents
-        """
-        split = args.split()
-        if split :
-            try:
-                eval(split[0])
-            except:
-                print("** class doesn't exist **")
-                return None
-        for key, value in storage.all().items():
-            if not split:
-                print(value)
-            else:
-                key = key.split('.')
-                if split[0] == key[0]:
-                    print(value)
+    #             key = key.split('.')
+    #             if split[0] == key[0]:
+    #                 print(value)
 
 
 if __name__ == '__main__':

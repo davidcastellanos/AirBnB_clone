@@ -13,20 +13,21 @@ class BaseModel:
         """
         Constructor
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        models.storage.new(self)
-        if kwargs is not None:
+        if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
-                if key == 'created_at':
-                    value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
-                if key == 'updated_at':
-                    value = datetime.strptime(datetime.now().isoformat(), '%Y-%m-%dT%H:%M:%S.%f')
-                
-            
+                elif key == 'created_at':
+                    self.created_at = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key == 'updated_at':
+                    self.updated_at = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -37,7 +38,6 @@ class BaseModel:
             + str(self.__dict__)
 
     def save(self):
-        print('save base')
         """
         Update date-time update_at public attribute
         """
@@ -51,5 +51,5 @@ class BaseModel:
         pdp = self.__dict__.copy()
         pdp['__class__'] = self.__class__.__name__
         pdp['created_at'] = self.created_at.isoformat()
-        pdp['updated_at'] = self.updated_at.isoformat()       
+        pdp['updated_at'] = self.updated_at.isoformat()
         return pdp
