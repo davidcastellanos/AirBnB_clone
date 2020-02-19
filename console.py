@@ -14,6 +14,7 @@ from models.review import Review
 classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City,
            "Amenity": Amenity, "Place": Place, "Review": Review}
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Prompt class
@@ -80,7 +81,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return None
 
-
     def do_destroy(self, args):
         """
         Deletes an instance based on the class name and id
@@ -105,7 +105,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
             return None
-
 
     def do_all(self, args):
         """
