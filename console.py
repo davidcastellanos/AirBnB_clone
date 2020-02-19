@@ -100,24 +100,23 @@ class HBNBCommand(cmd.Cmd):
             return None
 
 
-    # def do_all(self, args):
-    #     """
-    #     Display contents
-    #     """
-    #     split = args.split()
-    #     if split :
-    #         try:
-    #             eval(split[0])
-    #         except:
-    #             print("** class doesn't exist **")
-    #             return None
-    #     for key, value in storage.all().items():
-    #         if not split:
-    #             print(value)
-    #         else:
-    #             key = key.split('.')
-    #             if split[0] == key[0]:
-    #                 print(value)
+    def do_all(self, args):
+        """
+        Display contents
+        """
+        split = args.split()
+        if len(args) is 0:
+             for key, value in storage.all().items():
+                key = key.split('.')
+                print(value)
+        elif split[0] in classes:
+            for key, value in storage.all().items():
+                key = key.split('.')
+                if split[0] == key[0]:
+                    print(value)
+        else:
+            print("** class doesn't exist **")
+            return None
 
 
 if __name__ == '__main__':
