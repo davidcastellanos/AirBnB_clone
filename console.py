@@ -152,5 +152,12 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     setattr(storage.all()[key], splits[2], splits[3])
 
+    def default(self, args):
+        splits = args.split('.')
+        if splits[1] == "all()":
+            return self.do_all(splits[0])
+        if splits[1] == "show()":
+            return self.do_show(splits[0])
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
