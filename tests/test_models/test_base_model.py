@@ -28,8 +28,13 @@ class TestBMDocs(unittest.TestCase):
                 errors = pycodestyle.Checker(path).check_all()
                 self.assertEqual(errors, 0)
 
-    #def test_ModDocst(self):
-        #"""Test module DocString"""
+    def test_ModDocst(self):
+        """Test module DocString"""
+        self.assertIsNot(module_doc, None,
+                         "base_model.py needs a docstring")
+        self.assertTrue(len(module_doc) > 1,
+                        "base_model.py needs a docstring")
+
     #def test_classDocst(self):
         #"""Test Class DocString"""
 
