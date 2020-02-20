@@ -80,7 +80,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return None
 
-
     def do_destroy(self, args):
         """
         Deletes an instance based on the class name and id
@@ -105,7 +104,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
             return None
-
 
     def do_all(self, args):
         """
