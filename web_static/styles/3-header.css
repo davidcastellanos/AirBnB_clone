@@ -1,0 +1,15 @@
+header{
+    background-color: white;
+    border-bottom-style: solid;
+    border-bottom-color: #CCCCCC;
+    border-bottom-width: 1px;
+    height: 70px;
+    width:100%;
+    left: 0;
+    position:fixed;
+    top: 0;
+}
+
+header #logo{
+    float: left;
+}
