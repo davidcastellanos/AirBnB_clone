@@ -55,7 +55,30 @@
 }
 
 ul li{
-    text-decoration: none;
+    list-style: none;
+    padding-bottom: 5%;
+    margin-left: 10%;
+}
+
+ul li h2{
+      margin-left: -10%;
+}
+
+
+ul li:not(#last_list){
+      padding-bottom: 5%;
+}
+
+ul li h2 {
+    margin-bottom: auto;
+}
+
+#first_list{
+    margin-top: 15%;
+}
+
+#last_list{
+    margin-bottom: 20%;
 }
 
 .popover {
