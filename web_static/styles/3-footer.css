@@ -1,14 +1,9 @@
-footer{
-    background-color: white;
-    height: 60px;
+footer {
+    position: relative;
+    flex: 0 0 auto;
+    bottom: 0;
     width: 100%;
-    bottom: 0%;
-    right: 0%;
-    border-top-style: solid;
-    border-top-color: #CCCCCC;
-    border-top-width: 1px;
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
+    height: 60px;
+    border-top: 1px solid #CCCCCC;
+    background-color: white;
 }
